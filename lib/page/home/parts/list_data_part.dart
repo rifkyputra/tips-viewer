@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reference_explorer/page/detail/detail_page.dart';
@@ -15,7 +14,6 @@ class DataWidget extends ConsumerWidget {
       shrinkWrap: true,
       itemCount: listData.length,
       itemBuilder: (context, index) {
-        // final date = ref.watch(getCommitsInfo(listData[index]['path']));
         final data = listData[index];
 
         return ListTile(
@@ -27,10 +25,6 @@ class DataWidget extends ConsumerWidget {
           })),
           title: Text(data['name'].toString().replaceAll(
               RegExp(r'(-(?![\s-])|(\.md)|(\.jpg)|(\.jpeg))'), ' ')),
-          // trailing: date.when(
-          //     data: (data) => Text(data.first['commit']['author']['date']),
-          //     error: (_, __) => SizedBox(),
-          //     loading: () => CircularProgressIndicator()),
         );
       },
     );

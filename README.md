@@ -3,9 +3,6 @@
 a Flutter App to view [Rust Tips and Tricks](https://github.com/vandadnp/rust-tips-and-tricks) and [Dart Tips and Tricks](https://github.com/vandadnp/flutter-tips-and-tricks)
 
 
-
-
-
 ![samplegif](repo/images/demo.gif)
 
 

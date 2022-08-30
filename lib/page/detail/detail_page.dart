@@ -19,35 +19,38 @@ class DetailPage extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            imageFetchMeta.when(
-              data: (val) {
-                late String imgUrl;
-                if (val is List) {
-                  imgUrl = val.firstWhere((element) =>
-                      element['download_url'].contains('.jpg'))['download_url'];
-                }
-                if (val is Map) {
-                  imgUrl = val['download_url'];
-                }
-                return Image.network(
-                  imgUrl,
-                  fit: BoxFit.cover,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress?.cumulativeBytesLoaded != null &&
-                        loadingProgress?.expectedTotalBytes != null) {
-                      final percent = loadingProgress!.cumulativeBytesLoaded ~/
-                          loadingProgress.expectedTotalBytes!;
+            Center(
+              child: imageFetchMeta.when(
+                data: (val) {
+                  late String imgUrl;
+                  if (val is List) {
+                    imgUrl = val.firstWhere((element) => element['download_url']
+                        .contains('.jpg'))['download_url'];
+                  }
+                  if (val is Map) {
+                    imgUrl = val['download_url'];
+                  }
+                  return Image.network(
+                    imgUrl,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress?.cumulativeBytesLoaded != null &&
+                          loadingProgress?.expectedTotalBytes != null) {
+                        final percent =
+                            loadingProgress!.cumulativeBytesLoaded ~/
+                                loadingProgress.expectedTotalBytes!;
 
-                      if (percent < .8) {
-                        return const CircularProgressIndicator();
+                        if (percent < .8) {
+                          return const CircularProgressIndicator();
+                        }
                       }
-                    }
-                    return child;
-                  },
-                );
-              },
-              error: (_, s) => Text(s.toString()),
-              loading: () => const CircularProgressIndicator.adaptive(),
+                      return child;
+                    },
+                  );
+                },
+                error: (_, s) => Text(s.toString()),
+                loading: () => const CircularProgressIndicator.adaptive(),
+              ),
             ),
           ],
         ),
