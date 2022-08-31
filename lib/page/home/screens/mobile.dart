@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:reference_explorer/providers/providers.dart';
+import 'package:tips_viewer/providers/providers.dart';
 
 class HomePageMobile extends ConsumerWidget {
   const HomePageMobile({

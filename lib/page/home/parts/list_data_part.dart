@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:reference_explorer/page/detail/detail_page.dart';
-import 'package:reference_explorer/providers/providers.dart';
+import 'package:tips_viewer/page/detail/detail_page.dart';
+import 'package:tips_viewer/providers/providers.dart';
 
 class DataWidget extends ConsumerWidget {
   const DataWidget({Key? key}) : super(key: key);

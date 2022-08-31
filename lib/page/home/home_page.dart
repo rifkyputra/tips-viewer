@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:reference_explorer/models/filter.dart';
-import 'package:reference_explorer/page/home/parts/list_data_part.dart';
-import 'package:reference_explorer/page/home/screens/mobile.dart';
-import 'package:reference_explorer/page/home/screens/web.dart';
-import 'package:reference_explorer/providers/providers.dart';
-import 'package:reference_explorer/services/app_setup_service.dart';
+import 'package:tips_viewer/models/filter.dart';
+import 'package:tips_viewer/page/home/parts/list_data_part.dart';
+import 'package:tips_viewer/page/home/screens/mobile.dart';
+import 'package:tips_viewer/page/home/screens/web.dart';
+import 'package:tips_viewer/providers/providers.dart';
+import 'package:tips_viewer/services/app_setup_service.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -34,28 +34,10 @@ class HomePageContent extends ConsumerWidget {
     return ListView(
       shrinkWrap: true,
       children: [
-        Center(
+        const Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 4),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search..',
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon:
-                    GestureDetector(onTap: () {}, child: Icon(Icons.close)),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(26),
-                  borderSide: const BorderSide(
-                    color: Colors.transparent,
-                    style: BorderStyle.none,
-                    width: 0,
-                  ),
-                ),
-              ),
-              onChanged: (value) => ref
-                  .read(filterProvider.notifier)
-                  .update((state) => Filter(keyword: value)),
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 28.0, vertical: 4),
+            child: SearchWidget(),
           ),
         ),
         Padding(
@@ -103,6 +85,44 @@ class HomePageContent extends ConsumerWidget {
           ),
         )
       ],
+    );
+  }
+}
+
+class SearchWidget extends ConsumerWidget {
+  const SearchWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, ref) {
+    final controller = TextEditingController();
+
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        hintText: 'Search..',
+        prefixIcon: const Icon(Icons.search),
+        suffixIcon: IconButton(
+            onPressed: () {
+              controller.clear();
+              ref
+                  .read(filterProvider.notifier)
+                  .update((state) => Filter(keyword: ''));
+            },
+            icon: Icon(Icons.close)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(26),
+          borderSide: const BorderSide(
+            color: Colors.transparent,
+            style: BorderStyle.none,
+            width: 0,
+          ),
+        ),
+      ),
+      onChanged: (value) => ref
+          .read(filterProvider.notifier)
+          .update((state) => Filter(keyword: value)),
     );
   }
 }

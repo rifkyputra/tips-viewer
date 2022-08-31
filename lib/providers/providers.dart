@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:reference_explorer/models/filter.dart';
-import 'package:reference_explorer/services/app_setup_service.dart';
-import 'package:reference_explorer/services/github_service.dart';
+import 'package:tips_viewer/models/filter.dart';
+import 'package:tips_viewer/services/app_setup_service.dart';
+import 'package:tips_viewer/services/github_service.dart';
 
 const COMMITS_URL_PATH_PREFIX = '$dartRepoUrl/commits?path=';
 
