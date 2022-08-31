@@ -16,7 +16,11 @@ class HomePageMobile extends ConsumerWidget {
         title: Text(ref.watch(appSetupProvider).appTitle),
         centerTitle: true,
       ),
-      body: child,
+      body: SingleChildScrollView(
+        child: Column(children: [
+          child,
+        ]),
+      ),
     );
   }
 }

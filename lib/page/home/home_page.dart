@@ -41,12 +41,15 @@ class HomePageContent extends ConsumerWidget {
               decoration: InputDecoration(
                 hintText: 'Search..',
                 prefixIcon: const Icon(Icons.search),
+                suffixIcon:
+                    GestureDetector(onTap: () {}, child: Icon(Icons.close)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(26),
                   borderSide: const BorderSide(
-                      color: Colors.transparent,
-                      style: BorderStyle.none,
-                      width: 0),
+                    color: Colors.transparent,
+                    style: BorderStyle.none,
+                    width: 0,
+                  ),
                 ),
               ),
               onChanged: (value) => ref
