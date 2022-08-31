@@ -1,6 +1,6 @@
 {
-    "name": "reference_explorer",
-    "short_name": "reference_explorer",
+    "name": "tips_viewer",
+    "short_name": "tips_viewer",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
