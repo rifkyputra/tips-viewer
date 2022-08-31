@@ -31,8 +31,7 @@ class HomePageContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    return ListView(
-      shrinkWrap: true,
+    return Column(
       children: [
         const Center(
           child: Padding(

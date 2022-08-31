@@ -13,6 +13,7 @@ class DataWidget extends ConsumerWidget {
     return ListView.builder(
       shrinkWrap: true,
       itemCount: listData.length,
+      physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         final data = listData[index];
 

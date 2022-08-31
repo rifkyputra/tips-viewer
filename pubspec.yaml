@@ -3,7 +3,7 @@ description: a tips and trick viewer
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 1.0.0
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
@@ -26,15 +26,15 @@ dev_dependencies:
   flutter_launcher_icons: ^0.10.0
 
 flutter_icons:
-  android: "launcher_icon"
+  android: true
   ios: true
   image_path: "assets/AppIcons/playstore.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
     image_path: "assets/AppIcons/playstore.png"
-    background_color: "#000000"
-    theme_color: "#000000"
+    background_color: "#c7c2b3"
+    theme_color: "#c7c2b3"
   windows:
     generate: true
     image_path: "assets/AppIcons/playstore.png"
