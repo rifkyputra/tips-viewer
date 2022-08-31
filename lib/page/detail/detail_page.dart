@@ -13,55 +13,50 @@ class DetailPage extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final imageFetchMeta = ref.watch(detailImage(url));
 
-    return LayoutBuilder(builder: (context, s) {
-      print(MediaQuery.of(context).size.aspectRatio);
-      return Scaffold(
-        appBar: AppBar(),
-        body: SingleChildScrollView(
-          child: Center(
-            child: imageFetchMeta.when(
-              data: (val) {
-                late String imgUrl;
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: imageFetchMeta.when(
+          data: (val) {
+            late String imgUrl;
 
-                if (val is List) {
-                  imgUrl = val.firstWhere((element) =>
-                      element['download_url'].contains('.jpg'))['download_url'];
-                }
+            if (val is List) {
+              imgUrl = val.firstWhere((element) =>
+                  element['download_url'].contains('.jpg'))['download_url'];
+            }
 
-                if (val is Map) {
-                  imgUrl = val['download_url'];
-                }
+            if (val is Map) {
+              imgUrl = val['download_url'];
+            }
 
-                return DoubleTappableInteractiveViewer(
-                  scaleDuration: const Duration(milliseconds: 800),
-                  scale: MediaQuery.of(context).size.aspectRatio < 0.5 ? 3 : 2,
-                  child: Image.network(
-                    imgUrl,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress?.cumulativeBytesLoaded != null &&
-                          loadingProgress?.expectedTotalBytes != null) {
-                        final percent =
-                            loadingProgress!.cumulativeBytesLoaded ~/
-                                loadingProgress.expectedTotalBytes!;
+            return SizedBox(
+              child: DoubleTappableInteractiveViewer(
+                scaleDuration: const Duration(milliseconds: 800),
+                scale: MediaQuery.of(context).size.aspectRatio < 0.5 ? 3 : 2,
+                child: Image.network(
+                  imgUrl,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress?.cumulativeBytesLoaded != null &&
+                        loadingProgress?.expectedTotalBytes != null) {
+                      final percent = loadingProgress!.cumulativeBytesLoaded ~/
+                          loadingProgress.expectedTotalBytes!;
 
-                        if (percent < .8) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
+                      if (percent < .8) {
+                        return const Center(child: CircularProgressIndicator());
                       }
+                    }
 
-                      return child;
-                    },
-                  ),
-                );
-              },
-              error: (_, s) => Text(s.toString()),
-              loading: () => const CircularProgressIndicator.adaptive(),
-            ),
-          ),
+                    return child;
+                  },
+                ),
+              ),
+            );
+          },
+          error: (_, s) => Text(s.toString()),
+          loading: () => const CircularProgressIndicator.adaptive(),
         ),
-      );
-    });
+      ),
+    );
   }
 }
 
@@ -161,30 +156,34 @@ class _DoubleTappableInteractiveViewerState
           onDoubleTap: _handleDoubleTap,
           child: Container(
             color: Colors.black,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: InteractiveViewer(
-                    transformationController: _transformationController,
-                    child: Stack(children: [
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          child: widget.child,
+            child: LayoutBuilder(builder: (_, cs) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: cs.maxHeight,
+                    // height: MediaQuery.of(context).size.height,
+                    // width: MediaQuery.of(context).size.width,
+                    child: InteractiveViewer(
+                      transformationController: _transformationController,
+                      child: Stack(children: [
+                        Positioned(
+                          left: 0,
+                          top: 0,
+                          bottom: 0,
+                          right: 0,
+                          child: Container(
+                            child: widget.child,
+                          ),
                         ),
-                      ),
-                    ]),
+                      ]),
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              );
+            }),
           ),
         ),
         Positioned(
