@@ -87,7 +87,7 @@ class HomePageContent extends ConsumerWidget {
               ),
               ref.watch(listFromApi).when(
                     data: (_) => const SizedBox(),
-                    error: (_, __) => const Text('Something went wrong'),
+                    error: (e, s) => Text('Something went wrong $e $s'),
                     loading: () => const Padding(
                       padding: const EdgeInsets.symmetric(vertical: 28.0),
                       child: Center(
