@@ -23,6 +23,7 @@ final getCommitsInfo = FutureProvider.family((ref, String path) {
 
   return api.get(url: '$COMMITS_URL_PATH_PREFIX$path');
 });
+
 final listContent = StreamProvider<List<PostIsar>>((ref) async* {
   final filter = ref.watch(filterProvider);
   final isar = ref.watch(appSetupProvider).isar;
@@ -56,6 +57,23 @@ final listContent = StreamProvider<List<PostIsar>>((ref) async* {
   }
 });
 
+final restoreGithubToken = FutureProvider((ref) async {
+  ref.watch(appSetupProvider).appTitle;
+
+  final tokenQuery = await ref
+      .watch(appSetupProvider)
+      .isar
+      ?.githubConfigIsars
+      .buildQuery<GithubConfigIsar>()
+      .findFirst();
+
+  if (tokenQuery == null) return null;
+
+  ref.watch(appSetupProvider.notifier).setToken(tokenQuery.token);
+
+  return tokenQuery;
+});
+
 final postsInserter = FutureProvider<void>(
   (ref) {
     final isar = ref.watch(appSetupProvider).isar;
@@ -74,6 +92,22 @@ final postsInserter = FutureProvider<void>(
             )
         ]);
       });
+    }
+  },
+);
+
+final saveToken = FutureProvider.family(
+  (ref, String? token) async {
+    final isar = ref.watch(appSetupProvider).isar;
+    try {
+      if (token == null) throw Exception();
+      isar?.writeTxn((isar) {
+        return isar.githubConfigIsars.put(GithubConfigIsar()..token = token);
+      });
+      final newToken = await isar?.githubConfigIsars.buildQuery().findFirst();
+      return newToken;
+    } catch (e) {
+      return null;
     }
   },
 );

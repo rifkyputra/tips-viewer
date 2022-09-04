@@ -22,7 +22,10 @@ class AppSetupStateProvider extends StateNotifier<AppState> {
     final dir = await getApplicationSupportDirectory();
 
     final isar = await Isar.open(
-      schemas: [PostIsarSchema],
+      schemas: [
+        PostIsarSchema,
+        GithubConfigIsarSchema,
+      ],
       directory: dir.path,
       inspector: true, // if you want to enable the inspector for debug builds
     );
@@ -37,7 +40,9 @@ class AppSetupStateProvider extends StateNotifier<AppState> {
     state = state.copyWith(repoUrl: repo);
   }
 
-  void setToken(String token) {}
+  void setToken(String token) {
+    state = state.copyWith(githubToken: token);
+  }
 }
 
 class AppState {

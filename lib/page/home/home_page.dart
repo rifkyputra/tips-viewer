@@ -32,7 +32,9 @@ class HomePageContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     ref.watch(postsInserter);
+    ref.watch(restoreGithubToken);
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         const Center(
           child: Padding(
@@ -110,7 +112,7 @@ class SearchWidget extends ConsumerWidget {
                   .read(filterProvider.notifier)
                   .update((state) => Filter(keyword: ''));
             },
-            icon: Icon(Icons.close)),
+            icon: const Icon(Icons.close)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(26),
           borderSide: const BorderSide(

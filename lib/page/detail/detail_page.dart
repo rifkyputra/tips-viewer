@@ -17,6 +17,10 @@ class DetailPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.download),
+        onPressed: () {},
+      ),
       body: Center(
         child: imageFetchMeta.when(
           data: (val) {
@@ -54,7 +58,35 @@ class DetailPage extends ConsumerWidget {
               ),
             );
           },
-          error: (_, s) => Text(s.toString()),
+          error: (_, s) => Center(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.error, size: 50),
+              const SizedBox(height: 14),
+              const Text('Check you Internet Connection'),
+              const SizedBox(height: 40),
+              ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => Dialog(
+                          child: Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Text(s.toString() * 80),
+                            ],
+                          ),
+                        ),
+                      )),
+                    );
+                  },
+                  child: const Text('Debug'))
+            ],
+          )),
           loading: () => const CircularProgressIndicator.adaptive(),
         ),
       ),
