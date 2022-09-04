@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tips_viewer/providers/providers.dart';
@@ -93,7 +95,10 @@ class _DoubleTappableInteractiveViewerState
   @override
   void initState() {
     super.initState();
-    _doubleTapDetails = TapDownDetails(globalPosition: Offset.zero);
+    final Size windowSize = MediaQueryData.fromWindow(window).size;
+    late Offset screenOffset =
+        Offset(windowSize.width / 2, windowSize.height / 2);
+    _doubleTapDetails = TapDownDetails(globalPosition: screenOffset);
     _childKey = widget.childKey ?? GlobalKey();
     _transformationController = TransformationController();
     _animationController = AnimationController(
@@ -192,7 +197,6 @@ class _DoubleTappableInteractiveViewerState
           child: IconButton(
             color: Colors.pink,
             onPressed: () {
-              print('--------> $childheight');
               final newValue = _transformationController.value.isIdentity()
                   ? _applyZoom()
                   : _revertZoom();
@@ -205,7 +209,7 @@ class _DoubleTappableInteractiveViewerState
               _animationController.forward(from: 0);
               // _fullScreen = !_fullScreen;
             },
-            icon: Icon(Icons.fullscreen_rounded),
+            icon: const Icon(Icons.fullscreen_rounded),
           ),
         ),
       ],

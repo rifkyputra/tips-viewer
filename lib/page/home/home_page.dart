@@ -31,6 +31,7 @@ class HomePageContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    ref.watch(postsInserter);
     return Column(
       children: [
         const Center(
@@ -71,9 +72,9 @@ class HomePageContent extends ConsumerWidget {
               ),
               ref.watch(listFromApi).when(
                     data: (_) => const SizedBox(),
-                    error: (e, s) => Text('Something went wrong $e $s'),
+                    error: (e, s) => const SizedBox(),
                     loading: () => const Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 28.0),
+                      padding: EdgeInsets.symmetric(vertical: 28.0),
                       child: Center(
                         child: CircularProgressIndicator.adaptive(),
                       ),

@@ -8,24 +8,23 @@ class DataWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final listData = ref.watch(listContent);
+    final listData = ref.watch(listContent).asData?.value;
 
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: listData.length,
-      physics: NeverScrollableScrollPhysics(),
+      itemCount: listData?.length ?? 0,
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        final data = listData[index];
+        final data = listData![index];
 
         return ListTile(
           onTap: () =>
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
             return DetailPage(
-              url: data['_links']['self'],
+              url: data.link,
             );
           })),
-          title: Text(data['name'].toString().replaceAll(
-              RegExp(r'(-(?![\s-])|(\.md)|(\.jpg)|(\.jpeg))'), ' ')),
+          title: Text(data.title),
         );
       },
     );
