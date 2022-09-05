@@ -1,5 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
+
 import 'package:tips_viewer/models/isar/isar.dart';
 
 const dartRepoUrl =
@@ -45,19 +47,19 @@ class AppSetupStateProvider extends StateNotifier<AppState> {
   }
 }
 
-class AppState {
+class AppState extends Equatable {
   final String appTitle;
   final String? githubToken;
   final String repoUrl;
   final Isar? isar;
 
-  AppState({
+  const AppState({
     required this.appTitle,
     this.githubToken,
     required this.repoUrl,
     this.isar,
   });
-  AppState.empty({
+  const AppState.empty({
     this.appTitle = '',
     this.githubToken,
     this.repoUrl = '',
@@ -76,4 +78,7 @@ class AppState {
       isar: isar ?? this.isar,
     );
   }
+
+  @override
+  List<Object?> get props => [appTitle, githubToken, repoUrl, isar];
 }

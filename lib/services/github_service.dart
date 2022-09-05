@@ -8,8 +8,12 @@ class GithubService {
 
   Future<T> get<T>({
     required String url,
+    String? token,
   }) async {
-    final response = await dioClient.get(url);
+    final response = await dioClient.get(
+      url,
+      queryParameters: {'Authorization': 'Bearer $token'},
+    );
 
     try {
       return response.data as T;

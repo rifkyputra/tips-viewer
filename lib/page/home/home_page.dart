@@ -26,13 +26,27 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class HomePageContent extends ConsumerWidget {
+class HomePageContent extends ConsumerStatefulWidget {
   const HomePageContent({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ref) {
-    ref.watch(postsInserter);
-    ref.watch(restoreGithubToken);
+  ConsumerState<HomePageContent> createState() => _HomePageContentState();
+}
+
+class _HomePageContentState extends ConsumerState<HomePageContent> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ref.watch(postsInserter);
+      ref.watch(restoreGithubToken);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('build!!!');
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [

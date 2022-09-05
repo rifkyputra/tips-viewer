@@ -11,10 +11,13 @@ final githubProvider = Provider<GithubService>((_) => GithubService(Dio()));
 
 final listFromApi = FutureProvider<List>(
   (ref) async {
-    final appState = ref.watch(appSetupProvider);
+    final repoUrl = ref.watch(appSetupProvider).repoUrl;
     final api = ref.watch(githubProvider);
+    print(repoUrl);
+    print(api);
+    print('mashoook! <<<<<<<<');
 
-    return await api.get<List>(url: appState.repoUrl);
+    return await api.get<List>(url: repoUrl);
   },
 );
 
@@ -58,8 +61,6 @@ final listContent = StreamProvider<List<PostIsar>>((ref) async* {
 });
 
 final restoreGithubToken = FutureProvider((ref) async {
-  ref.watch(appSetupProvider).appTitle;
-
   final tokenQuery = await ref
       .watch(appSetupProvider)
       .isar
@@ -69,7 +70,7 @@ final restoreGithubToken = FutureProvider((ref) async {
 
   if (tokenQuery == null) return null;
 
-  ref.watch(appSetupProvider.notifier).setToken(tokenQuery.token);
+  ref.read(appSetupProvider.notifier).setToken(tokenQuery.token);
 
   return tokenQuery;
 });
