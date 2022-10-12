@@ -13,11 +13,10 @@ final listFromApi = FutureProvider<List>(
   (ref) async {
     final repoUrl = ref.watch(appSetupProvider).repoUrl;
     final api = ref.watch(githubProvider);
-    print(repoUrl);
-    print(api);
-    print('mashoook! <<<<<<<<');
+    final result = await api.get<List>(url: repoUrl);
+    print('### rsult : $result');
 
-    return await api.get<List>(url: repoUrl);
+    return result;
   },
 );
 
@@ -75,11 +74,12 @@ final restoreGithubToken = FutureProvider((ref) async {
   return tokenQuery;
 });
 
-final postsInserter = FutureProvider<void>(
-  (ref) {
+final postsInserter = StreamProvider<void>(
+  (ref) async* {
     final isar = ref.watch(appSetupProvider).isar;
     final currentTab = ref.watch(tab);
-    final content = ref.watch(listFromApi).asData?.value ?? [];
+    final content = await ref.watch(listFromApi.future);
+    print('#### content : $content');
 
     if (content.isNotEmpty) {
       isar?.writeTxn((isar) {

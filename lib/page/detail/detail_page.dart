@@ -37,7 +37,7 @@ class DetailPage extends ConsumerWidget {
 
             return SizedBox(
               child: DoubleTappableInteractiveViewer(
-                scaleDuration: const Duration(milliseconds: 800),
+                scaleDuration: const Duration(milliseconds: 300),
                 scale: MediaQuery.of(context).size.aspectRatio < 0.5 ? 3 : 2,
                 child: Image.network(
                   imgUrl,

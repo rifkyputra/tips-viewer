@@ -10,9 +10,15 @@ class GithubService {
     required String url,
     String? token,
   }) async {
+    final params = <String, dynamic>{};
+
+    if (token != null) {
+      params['Authorization'] = 'Bearer $token';
+    }
+
     final response = await dioClient.get(
       url,
-      queryParameters: {'Authorization': 'Bearer $token'},
+      queryParameters: params.isEmpty ? null : params,
     );
 
     try {

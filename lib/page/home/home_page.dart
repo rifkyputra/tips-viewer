@@ -38,15 +38,14 @@ class _HomePageContentState extends ConsumerState<HomePageContent> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref.watch(postsInserter);
-      ref.watch(restoreGithubToken);
-    });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
   }
 
   @override
   Widget build(BuildContext context) {
-    print('build!!!');
+    ref.watch(postsInserter);
+    ref.watch(restoreGithubToken);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -86,16 +85,6 @@ class _HomePageContentState extends ConsumerState<HomePageContent> {
                   },
                 ),
               ),
-              ref.watch(listFromApi).when(
-                    data: (_) => const SizedBox(),
-                    error: (e, s) => const SizedBox(),
-                    loading: () => const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 28.0),
-                      child: Center(
-                        child: CircularProgressIndicator.adaptive(),
-                      ),
-                    ),
-                  ),
               const DataWidget(),
             ],
           ),
@@ -117,6 +106,7 @@ class SearchWidget extends ConsumerWidget {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.zero,
         hintText: 'Search..',
         prefixIcon: const Icon(Icons.search),
         suffixIcon: IconButton(
@@ -128,7 +118,7 @@ class SearchWidget extends ConsumerWidget {
             },
             icon: const Icon(Icons.close)),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(26),
+          borderRadius: BorderRadius.circular(16),
           borderSide: const BorderSide(
             color: Colors.transparent,
             style: BorderStyle.none,
