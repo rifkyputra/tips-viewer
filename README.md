@@ -8,8 +8,8 @@ a Flutter App to view [Rust Tips and Tricks](https://github.com/vandadnp/rust-ti
 
 ## Plan
 
-- add github auth token
-- save to local storage
-- label to indicate new tips
-- view code sample
-- sort by timestamp
+- [ ] add github auth token
+- [x] save to local storage
+- [ ] label to indicate new tips
+- [ ] view code sample
+- [ ] sort by timestamp
